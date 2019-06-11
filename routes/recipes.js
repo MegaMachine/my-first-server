@@ -13,40 +13,36 @@ router.get('/', (req, res) => {
 });
 
 router.post('/add', (req, res, next) => {
-  // const data = {
-  //   title: 'Mega Burger',
-  //   description: 'We take a boolka and meat kotleta',
-  //   imagePath: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cheeseburger.jpg/1200px-Cheeseburger.jpg'
-  // };
-
-  // let { title, description, imagePath } = req.body;
+  let { title, description, imagePath } = req.body;
   let errors = [];
-  next(console.log(req))
-  
-  // if (!title) {
-  //   errors.push({ text: 'Please add a title' });
-  // }
-  // if (!description) {
-  //   errors.push({ text: 'Please add a description' });
-  // }
-  // if (!imagePath) {
-  //   errors.push({ text: 'Please add a image url' });
-  // }
+  let success = true;
+  if (!title) {
+    errors.push({ text: 'Please add a title' });
+  }
+  if (!description) {
+    errors.push({ text: 'Please add a description' });
+  }
+  if (!imagePath) {
+    errors.push({ text: 'Please add a image url' });
+  }
 
   // Check for errors
-  // if (error.length > 0) {
-
-  // } else {
+  if (errors.length > 0) {
+    success = false;
+    res.send({result: req.body, success: success, errors: errors});
+  } else {
     //Insert into table
-  //   Dishes
-  //     .create({
-  //       title,
-  //       description,
-  //       imagePath
-  //     })
-  //     .then(dishes => res.redirect('/recipes'))
-  //     .catch( error => console.log('Dishes create error ->', error.message));
-  // }
+    Dishes
+      .create({
+        title,
+        description,
+        imagePath,
+        test: {ing: [1,2,3]}
+      })
+      .then(dishes =>  res.send({result: dishes, success: success, errors: errors}))
+      .catch( error => console.log('Dishes create error ->', error.message));
+     
+  }
 
 
 });

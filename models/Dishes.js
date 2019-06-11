@@ -3,13 +3,16 @@ const db = require('../config/database');
 
 const Dishes = db.define('dishes', {
   title: {
-    type: Sequelize.TEXT,   
+    type: Sequelize.STRING,   
   },
   imagePath: {
-    type: Sequelize.TEXT,   
+    type: Sequelize.STRING,   
   },
   description: {
-    type: Sequelize.TEXT,   
+    type: Sequelize.STRING,   
+  },
+  test: {
+    type: Sequelize.JSON,   
   }
 });
 
