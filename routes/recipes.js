@@ -55,7 +55,11 @@ router.delete('/:id', (req, res) => {
     })
     .catch( error => console.log('Dishes destroy error ->', error.message));
 });
+router.put('/', (req, res) => {
+  console.log(req);
+});
 
+//Get all recipes
 function getAllDishes(res){
   Dishes
     .findAll()
