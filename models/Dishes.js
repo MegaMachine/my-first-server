@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 
 const Dishes = db.define('dishes', {
-  title: {
+  name: {
     type: Sequelize.STRING,   
   },
   imagePath: {
@@ -10,10 +10,9 @@ const Dishes = db.define('dishes', {
   },
   description: {
     type: Sequelize.STRING,   
-  },
-  test: {
-    type: Sequelize.JSON,   
   }
+}, {
+  timestamps: false
 });
 
 module.exports = Dishes;

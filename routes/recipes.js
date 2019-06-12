@@ -3,21 +3,19 @@ const router = express.Router();
 const db = require('../config/database');
 const Dishes = require('../models/Dishes');
 
+// Dishes.sync({
+//   force: false
+// });
 router.get('/', (req, res) => {
-  Dishes
-    .findAll()
-    .then(dishes => { 
-      res.send(dishes)
-    })
-    .catch(error => console.log('Dishes error -> ', error));
+  getAllDishes(res);
 });
 
 router.post('/add', (req, res, next) => {
-  let { title, description, imagePath } = req.body;
+  let { name, description, imagePath } = req.body;
   let errors = [];
   let success = true;
-  if (!title) {
-    errors.push({ text: 'Please add a title' });
+  if (!name) {
+    errors.push({ text: 'Please add a name' });
   }
   if (!description) {
     errors.push({ text: 'Please add a description' });
@@ -34,17 +32,36 @@ router.post('/add', (req, res, next) => {
     //Insert into table
     Dishes
       .create({
-        title,
+        name,
         description,
         imagePath,
-        test: {ing: [1,2,3]}
       })
       .then(dishes =>  res.send({result: dishes, success: success, errors: errors}))
       .catch( error => console.log('Dishes create error ->', error.message));
      
   }
-
-
 });
 
+router.delete('/:id', (req, res) => {
+  console.log(req.params);
+  Dishes
+    .destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+    .then(dishes =>  {
+      getAllDishes(res);
+    })
+    .catch( error => console.log('Dishes destroy error ->', error.message));
+});
+
+function getAllDishes(res){
+  Dishes
+    .findAll()
+    .then(dishes => { 
+      res.send(dishes)
+    })
+    .catch(error => console.log('Dishes get error -> ', error));
+};
 module.exports = router;
