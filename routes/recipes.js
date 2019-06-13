@@ -56,7 +56,23 @@ router.delete('/:id', (req, res) => {
     .catch( error => console.log('Recipes destroy error ->', error.message));
 });
 router.put('/', (req, res) => {
-  console.log(req);
+  let reqRecipes = req.body;
+  let dbRecipes = [];
+  Recipes
+    .findAll()
+    .then(response => {
+      dbRecipes = response;
+      for (let dbRecipe of dbRecipes){
+        for (let reqRecipe of reqRecipes){
+          if (dbRecipe.dataValues.id == reqRecipe.id){
+            console.log('+');
+          } else {
+            console.log('-');
+          }
+        }
+      }
+    })
+    .catch(error => console.log(error));
 });
 
 //Get all recipes
