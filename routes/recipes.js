@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
-const Dishes = require('../models/Dishes');
+const Recipes = require('../models/Recipes');
 
-// Dishes.sync({
+// Recipes.sync({
 //   force: false
 // });
 router.get('/', (req, res) => {
-  getAllDishes(res);
+  getAllRecipes(res);
 });
 
 router.post('/add', (req, res, next) => {
@@ -30,42 +30,42 @@ router.post('/add', (req, res, next) => {
     res.send({result: req.body, success: success, errors: errors});
   } else {
     //Insert into table
-    Dishes
+    Recipes
       .create({
         name,
         description,
         imagePath,
       })
-      .then(dishes =>  res.send({result: dishes, success: success, errors: errors}))
-      .catch( error => console.log('Dishes create error ->', error.message));
+      .then(recipes =>  res.send({result: recipes, success: success, errors: errors}))
+      .catch( error => console.log('Recipes create error ->', error.message));
      
   }
 });
 
 router.delete('/:id', (req, res) => {
   console.log(req.params);
-  Dishes
+  Recipes
     .destroy({
       where: {
         id: req.params.id
       }
     })
-    .then(dishes =>  {
-      getAllDishes(res);
+    .then(recipes =>  {
+      getAllRecipes(res);
     })
-    .catch( error => console.log('Dishes destroy error ->', error.message));
+    .catch( error => console.log('Recipes destroy error ->', error.message));
 });
 router.put('/', (req, res) => {
   console.log(req);
 });
 
 //Get all recipes
-function getAllDishes(res){
-  Dishes
+function getAllRecipes(res){
+  Recipes
     .findAll()
-    .then(dishes => { 
-      res.send(dishes)
+    .then(recipes => { 
+      res.send(recipes)
     })
-    .catch(error => console.log('Dishes get error -> ', error));
+    .catch(error => console.log('Recipes get error -> ', error));
 };
 module.exports = router;

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/database');
 
-const Dishes = db.define('dishes', {
+const Recipes = db.define('recipes', {
   name: {
     type: Sequelize.STRING,   
   },
@@ -15,4 +15,4 @@ const Dishes = db.define('dishes', {
   timestamps: false
 });
 
-module.exports = Dishes;
+module.exports = Recipes;
